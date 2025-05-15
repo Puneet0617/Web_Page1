@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BOGO Offer</title>
+  <style>
+    :root {
+      --primary-pink: #ff527b;
+      --light-pink: #fff1f5;
+      --tag-pink: #ff527b;
+      --disabled-gray: #aaa;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 450px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary-pink);
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .option {
+      border: 2px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .option.selected {
+      border-color: var(--primary-pink);
+      background-color: var(--light-pink);
+      box-shadow: 0 0 10px rgba(255, 82, 123, 0.3);
+    }
+
+    .option input[type="radio"] {
+      margin-right: 0.5rem;
+      accent-color: var(--primary-pink);
+    }
+
+    .tag {
+      background-color: var(--tag-pink);
+      color: white;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .most-popular {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      background-color: var(--primary-pink);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 0 0 0 8px;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+
+    .price del {
+      color: #bbb;
+      margin-left: 6px;
+      font-size: 0.9rem;
+    }
+
+    .selector {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.6rem;
+    }
+
+    select {
+      width: 48%;
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .summary {
+      text-align: right;
+      color: var(--primary-pink);
+      font-weight: bold;
+      margin-top: -1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      background-color: var(--primary-pink);
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .powered {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    .subtext {
+      color: #666;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>YAY! It’s BOGO</h2>
+
+    <div class="option selected" id="option1">
+      <label><input type="radio" name="unit" value="1" checked> 
+        <strong>1 Unit</strong> <span class="tag">10% Off</span><br/>
+        <span class="subtext">Standard Price</span>
+      </label>
+      <div class="price">$10.00 USD <del>$24.00 USD</del></div>
+    </div>
+
+    <div class="option" id="option2">
+      <div class="most-popular">MOST POPULAR</div>
+      <label><input type="radio" name="unit" value="2"> 
+        <strong>2 Unit</strong> <span class="tag">20% Off</span>
+      </label>
+      <div style="margin-top: 1rem; font-weight: bold;">Size &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Colour</div>
+      <div class="selector">
+        <select><option>S</option><option>M</option><option>L</option></select>
+        <select><option>Black</option><option>White</option><option>Pink</option></select>
+      </div>
+      <div class="selector">
+        <select><option>S</option><option>M</option><option>L</option></select>
+        <select><option>Colour</option><option>Black</option><option>White</option></select>
+      </div>
+      <div class="price">$18.00 USD <del>$24.00 USD</del></div>
+    </div>
+
+    <div class="option" id="option3">
+      <label><input type="radio" name="unit" value="3">
+        <strong>3 Unit</strong> <span class="tag">30% Off</span>
+      </label>
+      <div class="price">$24.00 USD <del>$24.00 USD</del></div>
+    </div>
+
+    <div class="summary">
+      Free Delivery <br/> Total : <span id="total-price">$10.00 USD</span>
+    </div>
+
+    <button class="add-to-cart">+ Add to Cart</button>
+    <div class="powered">@ Powered by Pumper</div>
+  </div>
+
+  <script>
+    const prices = {
+      1: 10.00,
+      2: 18.00,
+      3: 24.00
+    };
+
+    const radios = document.querySelectorAll('input[name="unit"]');
+    const totalPrice = document.getElementById("total-price");
+
+    radios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        const selected = radio.value;
+        totalPrice.textContent = `$${prices[selected].toFixed(2)} USD`;
+
+        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+        document.getElementById(`option${selected}`).classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>
